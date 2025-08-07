@@ -1,0 +1,66 @@
+# === Python Bytecode & Caches ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.manifest
+*.spec
+
+# === Virtual Environments ===
+env/
+venv/
+ENV/
+.venv/
+.pipenv/
+.venv.bak/
+
+# === PyCharm ===
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# === Jupyter Notebooks ===
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+*.checkpoint.ipynb
+
+# === Gradio Temp Files ===
+gradio_cached_examples/
+gradio/outputs/
+gradio/tmp/
+tmp/
+
+# === VSCode (if ever used) ===
+.vscode/
+
+# === OS-Specific ===
+.DS_Store
+Thumbs.db
+
+# === Logs and DBs ===
+*.log
+*.sqlite3
+*.db
+
+# === Environment Files ===
+.env
+.env.*
+
+# === Testing ===
+.coverage
+.tox/
+.nox/
+pytest_cache/
+
+# === Packaging ===
+*.tar.gz
+*.whl
+
+# === Misc ===
+*.bak
+*.swp
+*~
