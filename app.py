@@ -74,8 +74,20 @@ def process_image(file):
         ll = calculate_LowerBound(np.mean(part_image)) # calculate lower bound od picel which pixels will be removed from image is obtain experimentaly
         changed = change_image(part_image,lower_bound=ll) # remove pixel of lower boud 
         ch_blocks.append(changed) # create new list 
+
+    # Assuming 'ch_blocks' is a list of 25 blocks (e.g., 5x5 grid)
+    # Concatenate the blocks horizontally in each row, and then concatenate the rows vertically
+
+    # List to store the rows
+    rows = []
+    # Loop to concatenate blocks in each row
+    for i in range(0, 25, 5):  # Step size of 5 to group the blocks into rows
+        row = np.concatenate(ch_blocks[i:i+5], axis=1)  # Concatenate blocks horizontally (axis=1)
+        rows.append(row)
+    # Concatenate the rows vertically to form the final image
+    cc = np.concatenate(rows, axis=0)  # Concatenate along the vertical axis (axis=0)    
     
-    image = ch_blocks[6] # test to changed block
+    image = cc # test to be image OK
 
     temp_dir = tempfile.mkdtemp()
     file_path = os.path.join(temp_dir, "bw_image.png")
