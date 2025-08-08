@@ -1,2 +1,2 @@
 gradio
-opencv-python
+opencv-python-headless
