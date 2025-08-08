@@ -6,6 +6,18 @@ import tempfile
 import cv2
 import numpy as np
 
+# function that calculate lower boun level 
+# it was defined experimentaly and means when M as a mean walue of gryscale is 180 then lower bound walue is 130
+# when mean walue of gry scale pixels is 90 then lower baund value is 70
+def calculate_LowerBound(M):
+    # Define the slope (m) and intercept (b)
+    m = 2 / 3
+    b = 10
+
+    # Calculate B based on M
+    B = m * M + b
+    return B
+
 # Function to process the image by dividing it into blocks and returns 25 blocks of image
 def process_image_in_blocks(image, rows=5, cols=5):
     blocks = []
@@ -31,12 +43,40 @@ def process_image_in_blocks(image, rows=5, cols=5):
             #cv2.imwrite(f'block.png{i},{j}.png', block) ## prepare to save image to see it
     return blocks
 
+def change_image(image,lower_bound = 100):
+
+    # Assuming 'image' is your RGB image (shape = (2777, 1903, 3))
+    # For example, using a dummy image for demonstration
+    # image = np.random.randint(0, 256, (2777, 1903, 3), dtype=np.uint8)
+
+    # Define the range of values for the R, G, or B channels
+    upper_bound = 255
+
+    # Create a condition where any channel (R, G, or B) is in the range [50, 255]
+    condition = (image[:, :, 0] >= lower_bound) & (image[:, :, 0] <= upper_bound) | \
+               (image[:, :, 1] >= lower_bound) & (image[:, :, 1] <= upper_bound) | \
+               (image[:, :, 2] >= lower_bound) & (image[:, :, 2] <= upper_bound)
+
+    # Set the RGB value to white where the condition is true
+    image[condition] = [255, 255, 255]
+
+    # Now, 'image' has white pixels where any of the R, G, or B channels were in the range [50, 255]
+    return image
+
+
 def process_image(file):
     image = cv2.imread(file.name)  # file is a tempfile._TemporaryFileWrapper
     
-    blosks_images = process_image_in_blocks(image=image) # vrati roylo6ene obraykz na bloky
-    image = blosks_images[5] # test ci vrati len blok a da do image
+    block_images = process_image_in_blocks(image=image) # vrati roylo6ene obraykz na bloky
+        
+    ch_blocks = [] # will be list of changed blocks 
+    for part_image in block_images:
+        ll = calculate_LowerBound(np.mean(part_image)) # calculate lower bound od picel which pixels will be removed from image is obtain experimentaly
+        changed = change_image(part_image,lower_bound=ll) # remove pixel of lower boud 
+        ch_blocks.append(changed) # create new list 
     
+    image = ch_blocks[6] # test to changed block
+
     temp_dir = tempfile.mkdtemp()
     file_path = os.path.join(temp_dir, "bw_image.png")
     cv2.imwrite(file_path, image)
