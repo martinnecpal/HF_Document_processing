@@ -93,15 +93,21 @@ def process_image(file):
     return image, file_path
 
 with gr.Blocks() as demo:
-    gr.Markdown("## Upload an image, adjust brightness, and download the result")
-    
-    with gr.Row():
-            cv_adjust = gr.Button('cv', variant="primary")
+    with gr.Tabs():
+        with gr.Tab("Home"):
+            gr.Markdown("## Welcome to the Home Page")
+        with gr.Tab("Settings"):
+            gr.Markdown("## Adjust your settings here")
+        with gr.Tab("My getting started"):
+            gr.Markdown("## Upload an image, adjust brightness, and download the result")
 
-    with gr.Row():
-        cv_file_input = gr.File(label="Upload an image")
-        cv_image_output = gr.Image(type="numpy", width=300, height=300)   
-        fileoutput = gr.File(label="Dovnlosad processed file") 
+            with gr.Row():
+                    cv_adjust = gr.Button('cv', variant="primary")
+
+            with gr.Row():
+                cv_file_input = gr.File(label="Upload an image")
+                cv_image_output = gr.Image(type="numpy", width=300, height=300)
+                fileoutput = gr.File(label="Dovnlosad processed file")
 
     cv_adjust.click(
         fn = process_image,
