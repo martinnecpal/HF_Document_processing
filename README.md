@@ -12,7 +12,7 @@ license: mit
 
 # Document Processing - Brightness Adjuster
 
-A simple Gradio app that automatically increases image brightness by 50% and displays original vs processed images side by side.
+A simple Gradio app that automatically reformat image.
 
 ## Features
 - Upload images in various formats (JPG, JPEG, PNG, BMP, TIFF)
