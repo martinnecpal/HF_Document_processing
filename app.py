@@ -1,7 +1,5 @@
 import gradio as gr
 import os
-from PIL import Image, ImageEnhance
-import uuid
 import tempfile
 import cv2
 import numpy as np
